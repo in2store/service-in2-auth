@@ -1,0 +1,17 @@
+*.log
+nohup.out
+*.swp
+*tmp*
+logs/*
+*.pid
+.idea
+.DS_Store
+.build
+.vimprojects
+swagger.yml
+swagger.json
+main
+*.exe
+tests/logs/*
+Makefile
+service-in2-auth

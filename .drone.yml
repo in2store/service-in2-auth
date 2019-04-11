@@ -1,0 +1,52 @@
+workspace:
+  base: /drone/workspace
+  path: /service-in2-auth
+
+pipeline:
+  build:
+    image: registry.profzone.net:5000/profzone/golang:onbuild
+    pull: true
+    commands:
+      - profzone build
+    when:
+      branch: [ feature/*, test/feature/*, demo/feature/*, master ]
+  ship:
+    image: registry.profzone.net:5000/profzone/golang:onship
+    pull: true
+    commands:
+      - env
+      - profzone ship --push
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    when:
+      branch: [ feature/*, test/feature/*, demo/feature/*, master ]
+  deploy-staging:
+    image: registry.profzone.net:5000/profzone/golang:onship
+    pull: true
+    commands:
+      - profzone deploy --env STAGING
+    when:
+      branch: [ feature/* ]
+  deploy-test:
+    image: registry.profzone.net:5000/profzone/golang:onship
+    pull: true
+    commands:
+      - profzone deploy --env TEST
+    when:
+      branch: [ test/feature/* ]
+  deploy-demo:
+    image: registry.profzone.net:5000/profzone/golang:onship
+    pull: true
+    commands:
+      - profzone deploy --env DEMO
+    when:
+      branch: [ demo/feature/* ]
+  deploy-master:
+    image: registry.profzone.net:5000/profzone/golang:onship
+    pull: true
+    commands:
+      - profzone deploy --env STAGING
+#      - profzone deploy --env TEST
+#      - profzone deploy --env DEMO
+    when:
+      branch: [ master ]

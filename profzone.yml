@@ -1,0 +1,10 @@
+name: service-in2-auth
+group: in2
+version: 0.0.0
+description: 认证服务
+program_language: golang
+workflow:
+  extends: feature-pr
+scripts:
+  build: go build -v -o $PROJECT_NAME && libtools swagger
+  test: go test

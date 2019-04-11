@@ -1,0 +1,26 @@
+version: "2"
+services:
+  service-in2-auth:
+    image: ${PROFZONE_DOCKER_REGISTRY}/${PROJECT_GROUP}/${PROJECT_NAME}:${PROJECT_VERSION}
+    labels:
+      base_path: /in2-auth
+      io.rancher.container.pull_image: always
+      io.rancher.container.start_once: "true"
+      lb.g7pay.expose80: /in2-auth
+      project.description: ${PROJECT_DESCRIPTION}
+      project.group: ${PROJECT_GROUP}
+      project.name: ${PROJECT_NAME}
+      project.version: ${PROJECT_VERSION}
+      upstreams: ${S_CLIENTID_HOST},in2-book.db-routers.rancher.internal,in2-book-readonly.db-routers.rancher.internal
+    environment:
+      GOENV: ${GOENV}
+      S_CLIENTID_HOST: ${S_CLIENTID_HOST}
+      S_LOG_LEVEL: ${S_LOG_LEVEL}
+      S_MASTERDB_PASSWORD: ${S_MASTERDB_PASSWORD}
+      S_MASTERDB_USER: ${S_MASTERDB_USER}
+      S_SLAVEDB_PASSWORD: ${S_SLAVEDB_PASSWORD}
+      S_SLAVEDB_USER: ${S_SLAVEDB_USER}
+    dns_search:
+    - rancher.internal
+    dns:
+    - 169.254.169.250
