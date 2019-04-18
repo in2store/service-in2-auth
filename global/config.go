@@ -27,7 +27,7 @@ var Config = struct {
 	MasterDB *mysql.MySQL
 	SlaveDB  *mysql.MySQL
 
-	Domain string
+	AuthRedirectURL string
 
 	ClientID   *client_id.ClientID
 	ClientUser *client_in2_user.ClientIn2User
@@ -55,7 +55,7 @@ var Config = struct {
 		Host:     "localhost",
 	},
 
-	Domain: "http://localhost:8000",
+	AuthRedirectURL: "http://localhost:8000",
 
 	ClientID: &client_id.ClientID{
 		Client: client.Client{

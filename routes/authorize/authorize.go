@@ -152,5 +152,5 @@ func (req Authorize) Output(ctx context.Context) (result interface{}, err error)
 		}
 	}
 
-	return httpx.RedirectWithStatusMovedPermanently("/"), nil
+	return httpx.RedirectWithStatusMovedPermanently(global.Config.AuthRedirectURL), nil
 }
