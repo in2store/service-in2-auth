@@ -1,5 +1,5 @@
 name: service-in2-auth
-group: in2
+group: in2store
 version: 0.0.0
 description: 认证服务
 program_language: golang
