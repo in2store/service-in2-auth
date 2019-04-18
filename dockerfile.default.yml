@@ -5,6 +5,8 @@ env:
   GOENV: DEV
   S_CLIENTID_HOST: service-id.in2.rancher.internal
   S_CLIENTID_PORT: "80"
+  S_CLIENTUSER_HOST: service-in2-user.in2.rancher.internal
+  S_CLIENTUSER_PORT: "80"
   S_LOG_FORMAT: json
   S_MASTERDB_HOST: in2-book.db-routers.rancher.internal
   S_MASTERDB_PORT: "3306"

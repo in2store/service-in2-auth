@@ -10,6 +10,8 @@ func init() {
 	status_error.StatusErrorCodes.Register("Forbidden", 403100000, "不允许操作", "", true)
 	status_error.StatusErrorCodes.Register("NotFound", 404100000, "未找到", "", false)
 	status_error.StatusErrorCodes.Register("ChannelNotFound", 404100001, "Git托管通道配置未找到", "", true)
+	status_error.StatusErrorCodes.Register("StateMapNotFound", 404100002, "state参数错误", "", true)
 	status_error.StatusErrorCodes.Register("Conflict", 409100000, "操作冲突", "", true)
 	status_error.StatusErrorCodes.Register("InternalError", 500100000, "内部处理错误", "", false)
+	status_error.StatusErrorCodes.Register("ExchangeAccessTokenError", 500100001, "获取访问令牌出错", "", true)
 }

@@ -1,5 +1,6 @@
 GOENV: DEV
 S_CLIENTID_HOST: service-id.in2.rancher.internal
+S_CLIENTUSER_HOST: service-in2-user.in2.rancher.internal
 S_LOG_LEVEL: DEBUG
 S_MASTERDB_PASSWORD: "123456"
 S_MASTERDB_USER: root

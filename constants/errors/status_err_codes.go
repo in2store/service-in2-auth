@@ -19,6 +19,8 @@ const (
 	NotFound status_error.StatusErrorCode = http.StatusNotFound*1e6 + ServiceStatusErrorCode + iota
 	// @errTalk Git托管通道配置未找到
 	ChannelNotFound
+	// @errTalk state参数错误
+	StateMapNotFound
 )
 
 const (
@@ -39,4 +41,6 @@ const (
 const (
 	// 内部处理错误
 	InternalError status_error.StatusErrorCode = http.StatusInternalServerError*1e6 + ServiceStatusErrorCode + iota
+	// @errTalk 获取访问令牌出错
+	ExchangeAccessTokenError
 )

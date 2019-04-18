@@ -1,6 +1,7 @@
 package global
 
 import (
+	"github.com/in2store/service-in2-auth/clients/client_in2_user"
 	"github.com/johnnyeven/eden-library/clients/client_id"
 	"github.com/johnnyeven/libtools/courier/client"
 	"github.com/johnnyeven/libtools/courier/transport_http"
@@ -28,7 +29,8 @@ var Config = struct {
 
 	Domain string
 
-	ClientID *client_id.ClientID
+	ClientID   *client_id.ClientID
+	ClientUser *client_in2_user.ClientIn2User
 }{
 	Log: &log.Log{
 		Level: "DEBUG",
@@ -58,6 +60,11 @@ var Config = struct {
 	ClientID: &client_id.ClientID{
 		Client: client.Client{
 			Host: "service-id.profzone.service.profzone.net",
+		},
+	},
+	ClientUser: &client_in2_user.ClientIn2User{
+		Client: client.Client{
+			Host: "service-in2-user.in2store.service.profzone.net",
 		},
 	},
 }

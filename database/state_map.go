@@ -12,7 +12,7 @@ type StateMap struct {
 	// 业务ID
 	State string `json:"state" db:"F_state" sql:"char(36) NOT NULL"`
 	// ChannelID
-	ChannelID uint64 `json:"channelId,string" db:"F_channel_id" sql:"bigint(64) unsigned NOT NULL"`
+	ChannelID uint64 `json:"channelID,string" db:"F_channel_id" sql:"bigint(64) unsigned NOT NULL"`
 
 	presets.OperateTime
 	presets.SoftDelete
