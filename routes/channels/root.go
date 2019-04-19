@@ -1,4 +1,4 @@
-package channel
+package channels
 
 import "github.com/johnnyeven/libtools/courier"
 
@@ -9,5 +9,5 @@ type ChannelGroup struct {
 }
 
 func (ChannelGroup) Path() string {
-	return "/channel"
+	return "/channels"
 }

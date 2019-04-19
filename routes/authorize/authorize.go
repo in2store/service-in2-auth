@@ -152,5 +152,27 @@ func (req Authorize) Output(ctx context.Context) (result interface{}, err error)
 		}
 	}
 
+	// 注册session
+	session, err := modules.GetSessionByUserID(userID, db)
+	if err != nil {
+		logrus.Errorf("[Authorize] modules.GetSessionByUserID err: %v, request: userID=%d", err, userID)
+		return nil, err
+	}
+	if session != nil {
+		// 刷新已有的session
+		session, err = modules.RefreshSessionID(session.SessionID, db)
+		if err != nil {
+			logrus.Errorf("[Authorize] modules.RefreshSessionID err: %v, request: sessionID=%d", err, session.SessionID)
+			return nil, err
+		}
+	} else {
+		// 创建session
+		session, err = modules.CreateSession(userID, db)
+		if err != nil {
+			logrus.Errorf("[Authorize] modules.CreateSession err: %v, request: userID=%d", err, userID)
+			return nil, err
+		}
+	}
+
 	return httpx.RedirectWithStatusMovedPermanently(global.Config.AuthRedirectURL), nil
 }

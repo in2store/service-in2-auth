@@ -64,7 +64,9 @@ var Config = struct {
 	},
 	ClientUser: &client_in2_user.ClientIn2User{
 		Client: client.Client{
-			Host: "service-in2-user.in2store.service.profzone.net",
+			//Host: "service-in2-user.in2store.service.profzone.net",
+			Host: "localhost",
+			Port: 8001,
 		},
 	},
 }

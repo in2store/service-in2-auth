@@ -2,7 +2,8 @@ package routes
 
 import (
 	"github.com/in2store/service-in2-auth/routes/authorize"
-	"github.com/in2store/service-in2-auth/routes/channel"
+	"github.com/in2store/service-in2-auth/routes/channels"
+	"github.com/in2store/service-in2-auth/routes/sessions"
 	"github.com/johnnyeven/libtools/courier"
 	"github.com/johnnyeven/libtools/courier/swagger"
 )
@@ -14,8 +15,9 @@ func init() {
 	RootRouter.Register(swagger.SwaggerRouter)
 	RootRouter.Register(V0Router)
 
-	V0Router.Register(channel.Router)
+	V0Router.Register(channels.Router)
 	V0Router.Register(authorize.Router)
+	V0Router.Register(sessions.Router)
 }
 
 type GroupRoot struct {
