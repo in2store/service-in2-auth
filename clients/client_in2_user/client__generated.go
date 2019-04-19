@@ -80,18 +80,18 @@ func (c ClientIn2User) GetUserByUserID(req GetUserByUserIDRequest, metas ...gith
 
 type GetUserByUserIDResponse struct {
 	Meta github_com_johnnyeven_libtools_courier.Metadata
-	Body []byte
+	Body User
 }
 
 type GetUsersRequest struct {
-	// 入口ID
-	EntryID string `in:"query" name:"entryID"`
-	// 通道ID
-	ChannelID uint64 `in:"query" name:"channelID"`
 	// 分页
 	Size int32 `default:"10" in:"query" name:"size,omitempty"`
 	// 偏移量
 	Offset int32 `default:"0" in:"query" name:"offset,omitempty"`
+	// 入口ID
+	EntryID string `in:"query" name:"entryID"`
+	// 通道ID
+	ChannelID uint64 `in:"query" name:"channelID"`
 }
 
 func (c ClientIn2User) GetUsers(req GetUsersRequest, metas ...github_com_johnnyeven_libtools_courier.Metadata) (resp *GetUsersResponse, err error) {
