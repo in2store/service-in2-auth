@@ -28,7 +28,7 @@ func (req GetAuthURL) Path() string {
 	return "/:channelId"
 }
 
-type GetAuthURLResponse struct {
+type GetAuthURLResult struct {
 	URL string `json:"url"`
 }
 
@@ -67,7 +67,7 @@ func (req GetAuthURL) Output(ctx context.Context) (result interface{}, err error
 		Scopes: []string{"repo"},
 	}
 	url := conf.AuthCodeURL(state)
-	return &GetAuthURLResponse{
+	return &GetAuthURLResult{
 		URL: url,
 	}, nil
 }
