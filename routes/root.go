@@ -4,6 +4,7 @@ import (
 	"github.com/in2store/service-in2-auth/routes/authorize"
 	"github.com/in2store/service-in2-auth/routes/channels"
 	"github.com/in2store/service-in2-auth/routes/sessions"
+	"github.com/in2store/service-in2-auth/routes/tokens"
 	"github.com/johnnyeven/libtools/courier"
 	"github.com/johnnyeven/libtools/courier/swagger"
 )
@@ -18,6 +19,7 @@ func init() {
 	V0Router.Register(channels.Router)
 	V0Router.Register(authorize.Router)
 	V0Router.Register(sessions.Router)
+	V0Router.Register(tokens.Router)
 }
 
 type GroupRoot struct {

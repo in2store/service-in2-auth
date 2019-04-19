@@ -122,13 +122,11 @@ func (token *Token) ConditionByStruct() *github_com_johnnyeven_libtools_sqlx_bui
 func (token *Token) PrimaryKey() github_com_johnnyeven_libtools_sqlx.FieldNames {
 	return github_com_johnnyeven_libtools_sqlx.FieldNames{"ID"}
 }
-func (token *Token) Indexes() github_com_johnnyeven_libtools_sqlx.Indexes {
-	return github_com_johnnyeven_libtools_sqlx.Indexes{"I_user_channel": github_com_johnnyeven_libtools_sqlx.FieldNames{"UserID", "ChannelID"}}
-}
 func (token *Token) UniqueIndexes() github_com_johnnyeven_libtools_sqlx.Indexes {
 	return github_com_johnnyeven_libtools_sqlx.Indexes{
-		"U_token":    github_com_johnnyeven_libtools_sqlx.FieldNames{"AccessToken", "Enabled"},
-		"U_token_id": github_com_johnnyeven_libtools_sqlx.FieldNames{"TokenID", "Enabled"},
+		"U_token":        github_com_johnnyeven_libtools_sqlx.FieldNames{"AccessToken", "Enabled"},
+		"U_token_id":     github_com_johnnyeven_libtools_sqlx.FieldNames{"TokenID", "Enabled"},
+		"U_user_channel": github_com_johnnyeven_libtools_sqlx.FieldNames{"UserID", "ChannelID", "Enabled"},
 	}
 }
 func (token *Token) Comments() map[string]string {
@@ -566,6 +564,124 @@ func (token *Token) SoftDeleteByAccessToken(db *github_com_johnnyeven_libtools_s
 		dbErr := github_com_johnnyeven_libtools_sqlx.DBErr(err)
 		if dbErr.IsConflict() {
 			return token.DeleteByAccessToken(db)
+		}
+		return err
+	}
+	return nil
+}
+
+func (token *Token) FetchByUserIDAndChannelID(db *github_com_johnnyeven_libtools_sqlx.DB) error {
+	token.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
+
+	table := token.T()
+	stmt := table.Select().
+		Comment("Token.FetchByUserIDAndChannelID").
+		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
+			table.F("UserID").Eq(token.UserID),
+			table.F("ChannelID").Eq(token.ChannelID),
+			table.F("Enabled").Eq(token.Enabled),
+		))
+
+	return db.Do(stmt).Scan(token).Err()
+}
+
+func (token *Token) FetchByUserIDAndChannelIDForUpdate(db *github_com_johnnyeven_libtools_sqlx.DB) error {
+	token.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
+
+	table := token.T()
+	stmt := table.Select().
+		Comment("Token.FetchByUserIDAndChannelIDForUpdate").
+		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
+			table.F("UserID").Eq(token.UserID),
+			table.F("ChannelID").Eq(token.ChannelID),
+			table.F("Enabled").Eq(token.Enabled),
+		)).
+		ForUpdate()
+
+	return db.Do(stmt).Scan(token).Err()
+}
+
+func (token *Token) DeleteByUserIDAndChannelID(db *github_com_johnnyeven_libtools_sqlx.DB) error {
+	token.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
+
+	table := token.T()
+	stmt := table.Delete().
+		Comment("Token.DeleteByUserIDAndChannelID").
+		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
+			table.F("UserID").Eq(token.UserID),
+			table.F("ChannelID").Eq(token.ChannelID),
+			table.F("Enabled").Eq(token.Enabled),
+		))
+
+	return db.Do(stmt).Scan(token).Err()
+}
+
+func (token *Token) UpdateByUserIDAndChannelIDWithMap(db *github_com_johnnyeven_libtools_sqlx.DB, fieldValues github_com_johnnyeven_libtools_sqlx_builder.FieldValues) error {
+
+	if _, ok := fieldValues["UpdateTime"]; !ok {
+		fieldValues["UpdateTime"] = github_com_johnnyeven_libtools_timelib.MySQLTimestamp(time.Now())
+	}
+
+	token.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
+
+	table := token.T()
+
+	delete(fieldValues, "ID")
+
+	stmt := table.Update().
+		Comment("Token.UpdateByUserIDAndChannelIDWithMap").
+		Set(table.AssignsByFieldValues(fieldValues)...).
+		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
+			table.F("UserID").Eq(token.UserID),
+			table.F("ChannelID").Eq(token.ChannelID),
+			table.F("Enabled").Eq(token.Enabled),
+		))
+
+	dbRet := db.Do(stmt).Scan(token)
+	err := dbRet.Err()
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, _ := dbRet.RowsAffected()
+	if rowsAffected == 0 {
+		return token.FetchByUserIDAndChannelID(db)
+	}
+	return nil
+}
+
+func (token *Token) UpdateByUserIDAndChannelIDWithStruct(db *github_com_johnnyeven_libtools_sqlx.DB, zeroFields ...string) error {
+	fieldValues := github_com_johnnyeven_libtools_sqlx.FieldValuesFromStructByNonZero(token, zeroFields...)
+	return token.UpdateByUserIDAndChannelIDWithMap(db, fieldValues)
+}
+
+func (token *Token) SoftDeleteByUserIDAndChannelID(db *github_com_johnnyeven_libtools_sqlx.DB) error {
+	token.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
+
+	table := token.T()
+
+	fieldValues := github_com_johnnyeven_libtools_sqlx_builder.FieldValues{}
+	fieldValues["Enabled"] = github_com_johnnyeven_libtools_courier_enumeration.BOOL__FALSE
+
+	if _, ok := fieldValues["UpdateTime"]; !ok {
+		fieldValues["UpdateTime"] = github_com_johnnyeven_libtools_timelib.MySQLTimestamp(time.Now())
+	}
+
+	stmt := table.Update().
+		Comment("Token.SoftDeleteByUserIDAndChannelID").
+		Set(table.AssignsByFieldValues(fieldValues)...).
+		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
+			table.F("UserID").Eq(token.UserID),
+			table.F("ChannelID").Eq(token.ChannelID),
+			table.F("Enabled").Eq(token.Enabled),
+		))
+
+	dbRet := db.Do(stmt).Scan(token)
+	err := dbRet.Err()
+	if err != nil {
+		dbErr := github_com_johnnyeven_libtools_sqlx.DBErr(err)
+		if dbErr.IsConflict() {
+			return token.DeleteByUserIDAndChannelID(db)
 		}
 		return err
 	}

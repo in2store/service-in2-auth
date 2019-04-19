@@ -9,7 +9,7 @@ import (
 // @def primary ID
 // @def unique_index U_token_id TokenID
 // @def unique_index U_token AccessToken
-// @def index I_user_channel UserID ChannelID
+// @def unique_index U_user_channel UserID ChannelID
 type Token struct {
 	presets.PrimaryID
 
