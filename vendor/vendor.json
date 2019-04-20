@@ -3,6 +3,12 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "oQgLy8KmIOVov04WXH7KgU1bszc=",
+			"path": "github.com/btcsuite/btcutil/base58",
+			"revision": "ab6388e0c60ae4834a1f57511e20c17b5f78be4b",
+			"revisionTime": "2018-07-06T23:06:48Z"
+		},
+		{
 			"checksumSHA1": "VsE3zx2d8kpwj97TWhYddzAwBrY=",
 			"origin": "github.com/johnnyeven/libtools/vendor/github.com/fatih/color",
 			"path": "github.com/fatih/color",
