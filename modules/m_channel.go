@@ -34,6 +34,15 @@ func CreateChannel(channelID uint64, req CreateChannelParams, db *sqlx.DB) (chan
 	return
 }
 
+func GetChannels(db *sqlx.DB) (channelList database.ChannelList, err error) {
+	channel := &database.Channel{}
+	channelList, _, err = channel.FetchList(db, -1, 0)
+	if err != nil {
+		return nil, err
+	}
+	return
+}
+
 func GetChannelByChannelID(channelID uint64, db *sqlx.DB, withLock bool) (channel *database.Channel, err error) {
 	channel = &database.Channel{
 		ChannelID: channelID,
