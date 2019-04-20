@@ -2,8 +2,8 @@ package modules
 
 import (
 	"crypto/sha256"
-	"encoding/base64"
 	"fmt"
+	"github.com/btcsuite/btcutil/base58"
 	"github.com/google/uuid"
 	"github.com/in2store/service-in2-auth/database"
 	"github.com/johnnyeven/libtools/sqlx"
@@ -80,5 +80,5 @@ func RefreshSessionID(sessionID string, db *sqlx.DB) (*database.Session, error) 
 func NewSessionID(userID uint64) string {
 	guid := strings.Replace(uuid.New().String(), "-", "", -1)
 	hash := sha256.Sum256([]byte(fmt.Sprintf("%s%d", guid, userID)))
-	return base64.StdEncoding.EncodeToString(hash[:])
+	return base58.Encode(hash[:])
 }
