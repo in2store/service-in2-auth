@@ -21,6 +21,8 @@ type Channel struct {
 	AuthURL string `json:"authURL" db:"F_auth_url" sql:"varchar(255) DEFAULT NULL"`
 	// 交换tokenURL
 	TokenURL string `json:"tokenURL" db:"F_token_url" sql:"varchar(255) DEFAULT NULL"`
+	// raw文件访问URL
+	RawURL string `json:"rawURL" db:"F_raw_url" sql:"varchar(255) DEFAULT NULL"`
 
 	presets.OperateTime
 	presets.SoftDelete

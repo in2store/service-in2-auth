@@ -1,4 +1,4 @@
-package modules
+package libModule
 
 import (
 	"github.com/johnnyeven/eden-library/clients/client_id"

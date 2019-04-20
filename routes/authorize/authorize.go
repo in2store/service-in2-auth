@@ -8,7 +8,7 @@ import (
 	"github.com/in2store/service-in2-auth/database"
 	"github.com/in2store/service-in2-auth/global"
 	"github.com/in2store/service-in2-auth/modules"
-	libModule "github.com/johnnyeven/eden-library/modules"
+	libModule "github.com/johnnyeven/eden-library/libModule"
 	"github.com/johnnyeven/libtools/courier"
 	"github.com/johnnyeven/libtools/courier/httpx"
 	"github.com/johnnyeven/libtools/sqlx"

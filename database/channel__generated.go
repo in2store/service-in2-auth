@@ -36,6 +36,7 @@ type ChannelFields struct {
 	ClientSecret *github_com_johnnyeven_libtools_sqlx_builder.Column
 	AuthURL      *github_com_johnnyeven_libtools_sqlx_builder.Column
 	TokenURL     *github_com_johnnyeven_libtools_sqlx_builder.Column
+	RawURL       *github_com_johnnyeven_libtools_sqlx_builder.Column
 	CreateTime   *github_com_johnnyeven_libtools_sqlx_builder.Column
 	UpdateTime   *github_com_johnnyeven_libtools_sqlx_builder.Column
 	Enabled      *github_com_johnnyeven_libtools_sqlx_builder.Column
@@ -49,6 +50,7 @@ var ChannelField = struct {
 	ClientSecret string
 	AuthURL      string
 	TokenURL     string
+	RawURL       string
 	CreateTime   string
 	UpdateTime   string
 	Enabled      string
@@ -60,6 +62,7 @@ var ChannelField = struct {
 	ClientSecret: "ClientSecret",
 	AuthURL:      "AuthURL",
 	TokenURL:     "TokenURL",
+	RawURL:       "RawURL",
 	CreateTime:   "CreateTime",
 	UpdateTime:   "UpdateTime",
 	Enabled:      "Enabled",
@@ -76,6 +79,7 @@ func (channel *Channel) Fields() *ChannelFields {
 		ClientSecret: table.F(ChannelField.ClientSecret),
 		AuthURL:      table.F(ChannelField.AuthURL),
 		TokenURL:     table.F(ChannelField.TokenURL),
+		RawURL:       table.F(ChannelField.RawURL),
 		CreateTime:   table.F(ChannelField.CreateTime),
 		UpdateTime:   table.F(ChannelField.UpdateTime),
 		Enabled:      table.F(ChannelField.Enabled),
@@ -131,6 +135,7 @@ func (channel *Channel) Comments() map[string]string {
 		"Enabled":      "",
 		"ID":           "",
 		"Name":         "名称",
+		"RawURL":       "raw文件访问URL",
 		"TokenURL":     "交换tokenURL",
 		"UpdateTime":   "",
 	}
