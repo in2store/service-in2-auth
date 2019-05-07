@@ -101,6 +101,7 @@ func (req Authorize) Output(ctx context.Context) (result interface{}, err error)
 		// 如果不存在则创建
 		request := client_in2_user.CreateUserRequest{
 			Body: client_in2_user.CreateUserParams{
+				Name: userRequest.EntryID,
 				Entries: []client_in2_user.CreateUserParamsEntry{
 					{
 						ChannelID: userRequest.ChannelID,
