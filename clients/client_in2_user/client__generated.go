@@ -10,6 +10,7 @@ import (
 
 type ClientIn2UserInterface interface {
 	CreateUser(req CreateUserRequest, metas ...github_com_johnnyeven_libtools_courier.Metadata) (resp *CreateUserResponse, err error)
+	GetEntries(req GetEntriesRequest, metas ...github_com_johnnyeven_libtools_courier.Metadata) (resp *GetEntriesResponse, err error)
 	GetUserByUserID(req GetUserByUserIDRequest, metas ...github_com_johnnyeven_libtools_courier.Metadata) (resp *GetUserByUserIDResponse, err error)
 	GetUsers(req GetUsersRequest, metas ...github_com_johnnyeven_libtools_courier.Metadata) (resp *GetUsersResponse, err error)
 }
@@ -61,6 +62,28 @@ type CreateUserResponse struct {
 	Body User
 }
 
+type GetEntriesRequest struct {
+	// 用户ID
+	UserID uint64 `in:"path" name:"userID"`
+}
+
+func (c ClientIn2User) GetEntries(req GetEntriesRequest, metas ...github_com_johnnyeven_libtools_courier.Metadata) (resp *GetEntriesResponse, err error) {
+	resp = &GetEntriesResponse{}
+	resp.Meta = github_com_johnnyeven_libtools_courier.Metadata{}
+
+	err = c.Request(c.Name+".GetEntries", "GET", "/in2-user/v0/users/:userID/entries", req, metas...).
+		Do().
+		BindMeta(resp.Meta).
+		Into(&resp.Body)
+
+	return
+}
+
+type GetEntriesResponse struct {
+	Meta github_com_johnnyeven_libtools_courier.Metadata
+	Body UserEntryList
+}
+
 type GetUserByUserIDRequest struct {
 	// 用户ID
 	UserID uint64 `in:"path" name:"userID"`
@@ -84,14 +107,14 @@ type GetUserByUserIDResponse struct {
 }
 
 type GetUsersRequest struct {
-	// 分页
-	Size int32 `default:"10" in:"query" name:"size,omitempty"`
-	// 偏移量
-	Offset int32 `default:"0" in:"query" name:"offset,omitempty"`
 	// 入口ID
 	EntryID string `in:"query" name:"entryID"`
 	// 通道ID
 	ChannelID uint64 `in:"query" name:"channelID"`
+	// 分页
+	Size int32 `default:"10" in:"query" name:"size,omitempty"`
+	// 偏移量
+	Offset int32 `default:"0" in:"query" name:"offset,omitempty"`
 }
 
 func (c ClientIn2User) GetUsers(req GetUsersRequest, metas ...github_com_johnnyeven_libtools_courier.Metadata) (resp *GetUsersResponse, err error) {
