@@ -55,7 +55,7 @@ var Config = struct {
 		Host:     "localhost",
 	},
 
-	AuthRedirectURL: "http://localhost:8000",
+	AuthRedirectURL: "http://localhost:8081",
 
 	ClientID: &client_id.ClientID{
 		Client: client.Client{

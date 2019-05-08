@@ -8,13 +8,14 @@ import (
 	"github.com/in2store/service-in2-auth/database"
 	"github.com/in2store/service-in2-auth/global"
 	"github.com/in2store/service-in2-auth/modules"
-	libModule "github.com/johnnyeven/eden-library/libModule"
+	"github.com/johnnyeven/eden-library/libModule"
 	"github.com/johnnyeven/libtools/courier"
 	"github.com/johnnyeven/libtools/courier/httpx"
 	"github.com/johnnyeven/libtools/sqlx"
 	"github.com/johnnyeven/libtools/timelib"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/oauth2"
+	"net/http"
 )
 
 func init() {
@@ -26,6 +27,7 @@ type Authorize struct {
 	httpx.MethodGet
 	Code  string `name:"code" in:"query"`
 	State string `name:"state" in:"query"`
+	httpx.WithCookie
 }
 
 func (req Authorize) Path() string {
@@ -174,6 +176,14 @@ func (req Authorize) Output(ctx context.Context) (result interface{}, err error)
 			return nil, err
 		}
 	}
+
+	cookie := &http.Cookie{
+		Name:   "in2store_auth_token",
+		Value:  "INNER:" + session.SessionID,
+		Path:   "/",
+		Domain: global.Config.AuthRedirectURL,
+	}
+	req.SetCookie(cookie)
 
 	return httpx.RedirectWithStatusMovedPermanently(global.Config.AuthRedirectURL), nil
 }
