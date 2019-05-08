@@ -1,6 +1,8 @@
 GOENV: DEV
+S_AUTHREDIRECTURL: http://localhost:8081
 S_CLIENTID_HOST: service-id.in2store.rancher.internal
 S_CLIENTUSER_HOST: service-in2-user.in2store.rancher.internal
+S_COOKIEDOMAIN: localhost
 S_LOG_LEVEL: DEBUG
 S_MASTERDB_PASSWORD: "123456"
 S_MASTERDB_USER: root

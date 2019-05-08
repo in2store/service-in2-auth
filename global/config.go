@@ -27,7 +27,8 @@ var Config = struct {
 	MasterDB *mysql.MySQL
 	SlaveDB  *mysql.MySQL
 
-	AuthRedirectURL string
+	CookieDomain    string `conf:"env"`
+	AuthRedirectURL string `conf:"env"`
 
 	ClientID   *client_id.ClientID
 	ClientUser *client_in2_user.ClientIn2User
@@ -55,6 +56,7 @@ var Config = struct {
 		Host:     "localhost",
 	},
 
+	CookieDomain:    "localhost",
 	AuthRedirectURL: "http://localhost:8081",
 
 	ClientID: &client_id.ClientID{

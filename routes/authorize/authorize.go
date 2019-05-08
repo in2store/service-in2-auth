@@ -185,7 +185,7 @@ func (req *Authorize) Output(ctx context.Context) (result interface{}, err error
 		Name:   "in2store_auth_token",
 		Value:  "INNER:" + session.SessionID,
 		Path:   "/",
-		Domain: global.Config.AuthRedirectURL,
+		Domain: global.Config.CookieDomain,
 	}
 
 	return httpx.RedirectWithStatusMovedPermanently(global.Config.AuthRedirectURL), nil
