@@ -19,22 +19,26 @@ import (
 )
 
 func init() {
-	Router.Register(courier.NewRouter(Authorize{}))
+	Router.Register(courier.NewRouter(&Authorize{}))
 }
 
 // 处理认证回调
 type Authorize struct {
 	httpx.MethodGet
-	Code  string `name:"code" in:"query"`
-	State string `name:"state" in:"query"`
-	httpx.WithCookie
+	Code    string `name:"code" in:"query"`
+	State   string `name:"state" in:"query"`
+	cookies *http.Cookie
+}
+
+func (req Authorize) Cookies() *http.Cookie {
+	return req.cookies
 }
 
 func (req Authorize) Path() string {
 	return ""
 }
 
-func (req Authorize) Output(ctx context.Context) (result interface{}, err error) {
+func (req *Authorize) Output(ctx context.Context) (result interface{}, err error) {
 	db := global.Config.MasterDB.Get()
 	stateMap := &database.StateMap{
 		State: req.State,
@@ -177,13 +181,12 @@ func (req Authorize) Output(ctx context.Context) (result interface{}, err error)
 		}
 	}
 
-	cookie := &http.Cookie{
+	req.cookies = &http.Cookie{
 		Name:   "in2store_auth_token",
 		Value:  "INNER:" + session.SessionID,
 		Path:   "/",
 		Domain: global.Config.AuthRedirectURL,
 	}
-	req.SetCookie(cookie)
 
 	return httpx.RedirectWithStatusMovedPermanently(global.Config.AuthRedirectURL), nil
 }
