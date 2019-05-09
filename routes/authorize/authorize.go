@@ -15,7 +15,6 @@ import (
 	"github.com/johnnyeven/libtools/timelib"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/oauth2"
-	"net/http"
 )
 
 func init() {
@@ -25,13 +24,8 @@ func init() {
 // 处理认证回调
 type Authorize struct {
 	httpx.MethodGet
-	Code    string `name:"code" in:"query"`
-	State   string `name:"state" in:"query"`
-	cookies *http.Cookie
-}
-
-func (req Authorize) Cookies() *http.Cookie {
-	return req.cookies
+	Code  string `name:"code" in:"query"`
+	State string `name:"state" in:"query"`
 }
 
 func (req Authorize) Path() string {
@@ -181,12 +175,5 @@ func (req *Authorize) Output(ctx context.Context) (result interface{}, err error
 		}
 	}
 
-	req.cookies = &http.Cookie{
-		Name:   "in2store_auth_token",
-		Value:  "INNER:" + session.SessionID,
-		Path:   "/",
-		Domain: global.Config.CookieDomain,
-	}
-
-	return httpx.RedirectWithStatusMovedPermanently(global.Config.AuthRedirectURL), nil
+	return session, nil
 }
